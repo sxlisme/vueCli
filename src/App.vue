@@ -1,13 +1,23 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">首页</router-link> |
+      <router-link to="/about">关于</router-link> |
+      <router-link v-show="isLogin" to="/login">登录</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
+<script type="text/javascript">
+export default {
+  data () {
+    return {
+      isLogin: true
+    }
+  }
+}
 
+</script>
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -29,4 +39,5 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
 </style>
