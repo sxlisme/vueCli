@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>登录</h1>
+    <h1>登录1{{$attrs.msgg}}{{na}}</h1>
     <el-card class="box-card">
       <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm"  class="demo-ruleForm">
         <el-form-item label="账号" prop="account">
@@ -35,6 +35,7 @@ export default {
       }
     }
     return {
+      na: '子组件的',
       ruleForm: {
         account: '',
         pass: ''

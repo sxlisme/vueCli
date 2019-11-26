@@ -6,14 +6,23 @@
       <router-link v-show="isLogin" to="/login">登录</router-link>
     </div>
     <router-view />
+    <login msgg="sxl" ref="name"> </login>
   </div>
 </template>
 <script type="text/javascript">
+import login from './views/login.vue'
 export default {
+  components: {
+    login
+  },
   data () {
     return {
-      isLogin: true
+      isLogin: true,
+      msgg: '123'
     }
+  },
+  mounted () {
+    this.$refs.name.na = 'refs传递过来的'
   }
 }
 
