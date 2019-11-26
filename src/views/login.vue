@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>登录1{{$attrs.msgg}}{{na}}</h1>
     <el-card class="box-card">
-      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm"  class="demo-ruleForm">
+      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
         <el-form-item label="账号" prop="account">
           <el-input v-model="ruleForm.account" autocomplete="off"></el-input>
         </el-form-item>
@@ -18,22 +18,13 @@
   </div>
 </template>
 <script>
+import { requestLogin } from '../api/api'
 export default {
   name: 'login',
   props: {
     msg: String
   },
   data () {
-    var validatePass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'))
-      } else {
-        if (this.ruleForm.checkPass !== '') {
-          this.$refs.ruleForm.validateField('checkPass')
-        }
-        callback()
-      }
-    }
     return {
       na: '子组件的',
       ruleForm: {
@@ -46,7 +37,7 @@ export default {
           { min: 3, max: 30, message: '长度在 3 到 30 个字符', trigger: 'blur' }
         ],
         pass: [
-          { validator: validatePass, trigger: 'blur' }
+          { required: true, message: '请输入密码', trigger: 'blur' }
         ]
       }
     }
@@ -55,7 +46,21 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          var param = {
+            username: '申晓亮',
+            password: '666'
+          }
+          this.$message('顶顶顶顶')
+          requestLogin(param).then((res) => {
+            if (res.code === 500) {
+            } else if (res.code === 200) {
+              sessionStorage.setItem('username', res.user.name)
+              sessionStorage.setItem('uid', res.user.id)
+              this.$router.togo('/home')
+            }
+          }).catch((e) => {
+            console.log(e)
+          })
         } else {
           console.log('error submit!!')
           return false
@@ -88,9 +93,11 @@ li {
 a {
   color: #42b983;
 }
+
 .box-card {
   width: 500px;
   margin: 0 auto;
   padding: 40px 20px 20px 20px;
 }
+
 </style>
